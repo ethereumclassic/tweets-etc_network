@@ -1,3 +1,10 @@
+Want to add a tweet to @ETC_Network?
+
+Have a look inside the `[tweets](https://github.com/ethereumclassic/twitter-together/tree/main/tweets)` folder!
+
+
+---
+
 <p align="center">
   <a href="https://github.com/gr2m/twitter-together/issues/16"><img src="assets/logo.png" width="150" alt="twitter together logo" /></a>
 </p>
