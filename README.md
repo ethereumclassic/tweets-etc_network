@@ -1,6 +1,4 @@
-Want to add a tweet to @ETC_Network?
-
-Have a look inside the [`tweets`](https://github.com/ethereumclassic/twitter-together/tree/main/tweets) folder!
+Want to propose a tweet for [@ETC_Network](https://twitter.com/ETC_Network)? Have a look inside the [`tweets`](https://github.com/ethereumclassic/twitter-together/tree/main/tweets) folder for instructions!
 
 
 ---
