@@ -4,26 +4,52 @@ To create a new tweet create a new `*.tweet` file in this `tweets/` folder.
 
 <kbd>[Create new tweet](../../../new/main/?filename=tweets/<your-path>.tweet)</kbd>
 
-## Example
+## Simple Tweets
 
-Create a new file `tweets/hello-world.tweet` with the content
+For a simple text only tweet, create a new file `tweets/2022_01_31_Description.tweet` with the content
 
 > Hello, world!
 
-You can use subfolders, e.g. `tweets/2019-02/hello-world.tweet`, as long as the file is in the `tweets/` folder and has the `.tweet` file extension
+## Advanced Tweets
 
-## Create a tweet with a twitter poll
+You can also retweet, reply, ~~create polls and upload media~~, with the following formats (see `_sample_*.tweet` files)
 
-**Note**: The configured twitter account needs to be authorized to use Twitter's Ads API in order to send tweets including a poll.
+### Reply
 
-A tweet including a poll must end with 2-4 options in the following format
+```
+---
+reply: https://twitter.com/eth_classic/status/1565324035424133121
+---
 
-> Here is some text
->
-> ( ) option A  
-> ( ) option B  
-> ( ) option C  
-> ( ) option D
+This is a sample reply.
+```
+
+### Retweet
+
+```
+---
+retweet: https://twitter.com/eth_classic/status/1562379187104743424
+---
+```
+
+### Retweet with Text
+
+
+```
+---
+retweet: https://twitter.com/eth_classic/status/1562379187104743424
+---
+
+This is some text.
+```
+
+### Poll
+
+TODO
+
+### Media
+
+TODO
 
 ## Notes
 
