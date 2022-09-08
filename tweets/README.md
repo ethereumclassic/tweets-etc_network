@@ -14,7 +14,7 @@ Hello, world!
 
 ## Advanced Tweets
 
-You can also retweet, reply, ~~create polls and upload media~~, with the following formats (see `_sample_*.tweet` files)
+You can also retweet, reply, ~~create polls and upload media~~, with the following formats (see `$_sample_*.tweet` files)
 
 ### Reply
 
