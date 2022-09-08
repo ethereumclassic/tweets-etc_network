@@ -1,6 +1,6 @@
 /**
- * This test checks the happy path of a commit to the main branch (main)
- * which includes a new *.tweet file.
+ * This test checks the happy path of a commit to the main branch (master)
+ * which includes a new *.tweet file that is making use of the front matter to quote retweet.
  */
 
 const assert = require("assert");
@@ -13,7 +13,7 @@ const tap = require("tap");
 process.env.GITHUB_EVENT_NAME = "push";
 process.env.GITHUB_TOKEN = "secret123";
 process.env.GITHUB_EVENT_PATH = require.resolve("./event.json");
-process.env.GITHUB_REF = "refs/heads/main";
+process.env.GITHUB_REF = "refs/heads/master";
 process.env.GITHUB_WORKSPACE = path.dirname(process.env.GITHUB_EVENT_PATH);
 
 // set other env variables so action-toolkit is happy
@@ -37,7 +37,7 @@ nock("https://api.github.com", {
     files: [
       {
         status: "added",
-        filename: "tweets/cupcake-ipsum.tweet",
+        filename: "tweets/hello-world.tweet",
       },
     ],
   })
@@ -46,23 +46,34 @@ nock("https://api.github.com", {
   .post(
     "/repos/gr2m/twitter-together/commits/0000000000000000000000000000000000000002/comments",
     (body) => {
-      console.log(body.body);
       tap.equal(
         body.body,
-        "Errors:\n\n- Tweet exceeds maximum length of 280 characters by 166 characters"
+        "Tweeted:\n\n- https://twitter.com/gr2m/status/0000000000000000002"
       );
       return true;
     }
   )
   .reply(201);
 
-process.on("exit", (code) => {
-  assert.strictEqual(code, 1);
-  assert.deepStrictEqual(nock.pendingMocks(), []);
+nock("https://api.twitter.com")
+  .post("/1.1/statuses/update.json", (body) => {
+    tap.equal(body.status, "Smart thinking!");
+    tap.equal(
+      body.attachment_url,
+      "https://twitter.com/m2rg/status/0000000000000000001"
+    );
+    return true;
+  })
+  .reply(201, {
+    id_str: "0000000000000000002",
+    user: {
+      screen_name: "gr2m",
+    },
+  });
 
-  // above code exits with 1 (error), but tap expects 0.
-  // Tap adds the "process.exitCode" property for that purpose.
-  process.exitCode = 0;
+process.on("exit", (code) => {
+  assert.equal(code, 0);
+  assert.deepEqual(nock.pendingMocks(), []);
 });
 
 require("../../lib");
