@@ -1,5 +1,5 @@
 /**
- * This test checks the happy path of a commit to the main branch (master)
+ * This test checks the happy path of a commit to the main branch (main)
  * which includes a new *.tweet file.
  */
 
@@ -13,7 +13,7 @@ const tap = require("tap");
 process.env.GITHUB_EVENT_NAME = "push";
 process.env.GITHUB_TOKEN = "secret123";
 process.env.GITHUB_EVENT_PATH = require.resolve("./event.json");
-process.env.GITHUB_REF = "refs/heads/master";
+process.env.GITHUB_REF = "refs/heads/main";
 process.env.GITHUB_WORKSPACE = path.dirname(process.env.GITHUB_EVENT_PATH);
 
 // set other env variables so action-toolkit is happy
@@ -22,6 +22,9 @@ process.env.GITHUB_ACTION = "twitter-together";
 process.env.GITHUB_ACTOR = "";
 process.env.GITHUB_REPOSITORY = "";
 process.env.GITHUB_SHA = "";
+
+// Needed for polls only
+process.env.TWITTER_ACCOUNT_ID = "account123";
 
 // MOCK
 nock("https://api.github.com", {
@@ -37,7 +40,7 @@ nock("https://api.github.com", {
     files: [
       {
         status: "added",
-        filename: "tweets/hello-world.tweet",
+        filename: "tweets/my-poll.tweet",
       },
     ],
   })
@@ -55,9 +58,23 @@ nock("https://api.github.com", {
   )
   .reply(201);
 
+// lookup user ID
+nock("https://ads-api.twitter.com")
+  .post("/8/accounts/account123/cards/poll", (body) => {
+    tap.equal(body.name, "tweets/my-poll.tweet");
+    tap.equal(body.duration_in_minutes, "1440"); // two days
+    tap.equal(body.first_choice, "option 1");
+    tap.equal(body.second_choice, "option 2");
+    tap.equal(body.third_choice, "option 3");
+    tap.equal(body.fourth_choice, "option 4");
+    return true;
+  })
+  .reply(201, { data: { card_uri: "card://123" } });
+
 nock("https://api.twitter.com")
   .post("/1.1/statuses/update.json", (body) => {
-    tap.equal(body.status, "Hello, world!");
+    tap.equal(body.card_uri, "card://123");
+    tap.equal(body.status, "Here is my poll");
     return true;
   })
   .reply(201, {
