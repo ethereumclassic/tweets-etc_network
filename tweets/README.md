@@ -8,7 +8,9 @@ To create a new tweet create a new `*.tweet` file in this `tweets/` folder.
 
 For a simple text only tweet, create a new file `tweets/2022_01_31_Description.tweet` with the content
 
-> Hello, world!
+```
+Hello, world!
+```
 
 ## Advanced Tweets
 
