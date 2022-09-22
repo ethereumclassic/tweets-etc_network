@@ -12,46 +12,7 @@ For a simple text only tweet, create a new file `tweets/2022_01_31_Description.t
 Hello, world!
 ```
 
-## Advanced Tweets
-
-You can also retweet, reply, ~~create polls and upload media~~, with the following formats (see `$_sample_*.tweet` files)
-
-### Reply
-
-```
----
-reply: https://twitter.com/ETC_Network/status/1567773491553882113
----
-
-This is a sample reply.
-```
-
-### Retweet
-
-```
----
-retweet: https://twitter.com/ETC_Network/status/1567773491553882113
----
-```
-
-### Retweet with Text
-
-
-```
----
-retweet: https://twitter.com/ETC_Network/status/1567773491553882113
----
-
-This is some text.
-```
-
-### Poll
-
-TODO
-
-### Media
-
-TODO
+For more advanced tweets such as retweets, meda and polls, see the [main readme](../README.md#advanced-tweeting) or the `$_sample_*.tweet` files.
 
 ## Notes
 
@@ -62,4 +23,4 @@ TODO
 
 ## Questions?
 
-If you have any further questions or suggestions, please create an issue at https://github.com/gr2m/twitter-together/issues/new
+If you have any further questions or suggestions, please create an issue at https://github.com/twitter-together/action/issues/new

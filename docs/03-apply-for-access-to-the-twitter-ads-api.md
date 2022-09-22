@@ -38,7 +38,7 @@ Here are some anwsers to the option that I usually default to
 
 ...describe your unique differentiators in the Ad Tech ecosystem\*
 
-> We are utilizing https://github.com/gr2m/twitter-together to collaborate on tweets with our community
+> We are utilizing https://github.com/twitter-together/action to collaborate on tweets with our community
 
 #### Do you have API partnerships on any other platforms?
 
@@ -113,7 +113,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     steps:
-      - uses: gr2m/twitter-together@v1.x
+      - uses: twitter-together/action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   tweet:
@@ -122,9 +122,9 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - name: checkout main
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Tweet
-        uses: gr2m/twitter-together@v1.x
+        uses: twitter-together/action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}

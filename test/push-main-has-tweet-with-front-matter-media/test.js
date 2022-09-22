@@ -1,9 +1,8 @@
 /**
- * This test checks the happy path of a commit to the main branch (master)
+ * This test checks the happy path of a commit to the main branch
  * which includes a new *.tweet file that is making use of the front matter to quote retweet.
  */
 
-const assert = require("assert");
 const path = require("path");
 
 const nock = require("nock");
@@ -13,7 +12,7 @@ const tap = require("tap");
 process.env.GITHUB_EVENT_NAME = "push";
 process.env.GITHUB_TOKEN = "secret123";
 process.env.GITHUB_EVENT_PATH = require.resolve("./event.json");
-process.env.GITHUB_REF = "refs/heads/master";
+process.env.GITHUB_REF = "refs/heads/main";
 process.env.GITHUB_WORKSPACE = path.dirname(process.env.GITHUB_EVENT_PATH);
 
 // set other env variables so action-toolkit is happy
@@ -31,7 +30,7 @@ nock("https://api.github.com", {
 })
   // get changed files
   .get(
-    "/repos/gr2m/twitter-together/compare/0000000000000000000000000000000000000001...0000000000000000000000000000000000000002"
+    "/repos/twitter-together/action/compare/0000000000000000000000000000000000000001...0000000000000000000000000000000000000002"
   )
   .reply(200, {
     files: [
@@ -48,7 +47,7 @@ nock("https://api.github.com", {
 
   // post comment
   .post(
-    "/repos/gr2m/twitter-together/commits/0000000000000000000000000000000000000002/comments",
+    "/repos/twitter-together/action/commits/0000000000000000000000000000000000000002/comments",
     (body) => {
       tap.equal(
         body.body,
@@ -99,18 +98,20 @@ nock("https://upload.twitter.com")
     tap.equal(body.media_id, "0000000000000000002");
     return true;
   })
-  .reply(201)
-
-  .post("/1.1/media/metadata/create.json", (body) => {
-    tap.equal(body.media_id, "0000000000000000002");
-    tap.equal(body["alt_text[text]"], "Blahaj!"); // TODO: Is this actually how Twitter expects this?
-    return true;
-  })
   .reply(201);
 
+// TODO: Support alt text (twitter library does not support JSON payloads)
+//       https://github.com/desmondmorris/node-twitter/issues/347
+// .post("/1.1/media/metadata/create.json", (body) => {
+//   tap.equal(body.media_id, "0000000000000000002");
+//   tap.equal(body.alt_text.text, "Blahaj!");
+//   return true;
+// })
+// .reply(201);
+
 process.on("exit", (code) => {
-  assert.equal(code, 0);
-  assert.deepEqual(nock.pendingMocks(), []);
+  tap.equal(code, 0);
+  tap.same(nock.pendingMocks(), []);
 });
 
 require("../../lib");

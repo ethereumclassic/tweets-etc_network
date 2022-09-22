@@ -26,13 +26,13 @@ process.env.GITHUB_SHA = "";
 nock("https://api.github.com")
   // get changed files
   .get(
-    "/repos/gr2m/twitter-together/compare/0000000000000000000000000000000000000001...0000000000000000000000000000000000000002"
+    "/repos/twitter-together/action/compare/0000000000000000000000000000000000000001...0000000000000000000000000000000000000002"
   )
   .reply(500);
 
 process.on("exit", (code) => {
   tap.equal(code, 1);
-  tap.deepEqual(nock.pendingMocks(), []);
+  tap.same(nock.pendingMocks(), []);
 
   // above code exits with 1 (error), but tap expects 0.
   // Tap adds the "process.exitCode" property for that purpose.

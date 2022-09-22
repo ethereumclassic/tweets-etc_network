@@ -3,7 +3,6 @@
  * which includes a new *.tweet file.
  */
 
-const assert = require("assert");
 const path = require("path");
 
 const nock = require("nock");
@@ -34,7 +33,7 @@ nock("https://api.github.com", {
 })
   // get changed files
   .get(
-    "/repos/gr2m/twitter-together/compare/0000000000000000000000000000000000000001...0000000000000000000000000000000000000002"
+    "/repos/twitter-together/action/compare/0000000000000000000000000000000000000001...0000000000000000000000000000000000000002"
   )
   .reply(200, {
     files: [
@@ -47,7 +46,7 @@ nock("https://api.github.com", {
 
   // post comment
   .post(
-    "/repos/gr2m/twitter-together/commits/0000000000000000000000000000000000000002/comments",
+    "/repos/twitter-together/action/commits/0000000000000000000000000000000000000002/comments",
     (body) => {
       tap.equal(
         body.body,
@@ -60,7 +59,7 @@ nock("https://api.github.com", {
 
 // lookup user ID
 nock("https://ads-api.twitter.com")
-  .post("/8/accounts/account123/cards/poll", (body) => {
+  .post("/11/accounts/account123/cards/poll", (body) => {
     tap.equal(body.name, "tweets/my-poll.tweet");
     tap.equal(body.duration_in_minutes, "1440"); // two days
     tap.equal(body.first_choice, "option 1");
@@ -85,8 +84,8 @@ nock("https://api.twitter.com")
   });
 
 process.on("exit", (code) => {
-  assert.equal(code, 0);
-  assert.deepEqual(nock.pendingMocks(), []);
+  tap.equal(code, 0);
+  tap.same(nock.pendingMocks(), []);
 });
 
 require("../../lib");

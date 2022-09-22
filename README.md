@@ -4,14 +4,14 @@ Want to propose a tweet for [@ETC_Network](https://twitter.com/ETC_Network)? Hav
 ---
 
 <p align="center">
-  <a href="https://github.com/gr2m/twitter-together/issues/16"><img src="assets/logo.png" width="150" alt="twitter together logo" /></a>
+  <a href="https://github.com/twitter-together/action/issues/16"><img src="assets/logo.png" width="150" alt="twitter together logo" /></a>
 </p>
 
 <h1 align="center">Twitter, together!</h1>
 
 <p align="center">
-  <a href="https://action-badges.now.sh" rel="nofollow"><img alt="Build Status" src="https://github.com/gr2m/twitter-together/workflows/Test/badge.svg"></a>
-  <a href="https://github.com/gr2m/twitter-together/blob/80c8aab34382347120e22501c2e44f30a7a62174/package.json#L8" rel="nofollow"><img alt="Coverage" src="https://img.shields.io/badge/coverage-100%25-green.svg"></a>
+  <a href="https://action-badges.now.sh" rel="nofollow"><img alt="Build Status" src="https://github.com/twitter-together/action/workflows/Test/badge.svg"></a>
+  <a href="https://github.com/twitter-together/action/blob/80c8aab34382347120e22501c2e44f30a7a62174/package.json#L8" rel="nofollow"><img alt="Coverage" src="https://img.shields.io/badge/coverage-100%25-green.svg"></a>
 </p>
 
 For Open Source or event maintainers that share a project twitter account, `twitter-together` is a GitHub Action that utilizes text files to publish tweets from a GitHub repository. Rather than tweeting directly, GitHub’s pull request review process encourages more collaboration, Twitter activity and editorial contributions by enabling everyone to submit tweet drafts to a project.
@@ -29,6 +29,7 @@ For Open Source or event maintainers that share a project twitter account, `twit
 - [How it works](#how-it-works)
   - [The `push` event](#the-push-event)
   - [The `pull_request` event](#the-pull_request-event)
+  - [Advanced tweeting](#advanced-tweeting)
 - [Motivation](#motivation)
 - [License](#license)
 
@@ -56,7 +57,7 @@ The Twitter Ads API we currently use is the `v8` version.
        runs-on: ubuntu-latest
        if: github.event_name == 'pull_request'
        steps:
-         - uses: gr2m/twitter-together@v1.x
+         - uses: twitter-together/action@v2
            env:
              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
      tweet:
@@ -65,9 +66,9 @@ The Twitter Ads API we currently use is the `v8` version.
        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
        steps:
          - name: checkout main
-           uses: actions/checkout@v2
+           uses: actions/checkout@v3
          - name: Tweet
-           uses: gr2m/twitter-together@v1.x
+           uses: twitter-together/action@v2
            env:
              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
              TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
@@ -86,15 +87,27 @@ All contributions welcome!
 
 Especially if you try `twitter-together` for the first time, I’d love to hear if you ran into any trouble. I greatly appreciate any documentation improvements to make things more clear, I am not a native English speaker myself.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for more information on how to contribute. You can also [just say thanks](https://github.com/gr2m/twitter-together/issues/new?labels=feature&template=04_thanks.md) 😊
+See [CONTRIBUTING.md](CONTRIBUTING.md) for more information on how to contribute. You can also [just say thanks](https://github.com/twitter-together/action/issues/new?labels=feature&template=04_thanks.md) 😊
 
 ## Thanks to all contributors 💐
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore -->
-<table><tr><td align="center"><a href="https://jasonet.co"><img src="https://avatars1.githubusercontent.com/u/10660468?v=4" width="100px;" alt="Jason Etcovitch"/><br /><sub><b>Jason Etcovitch</b></sub></a><br /><a href="#design-JasonEtco" title="Design">🎨</a> <a href="https://github.com/gr2m/twitter-together/commits?author=JasonEtco" title="Documentation">📖</a> <a href="https://github.com/gr2m/twitter-together/commits?author=JasonEtco" title="Code">💻</a></td><td align="center"><a href="http://erons.me"><img src="https://avatars0.githubusercontent.com/u/37238033?v=4" width="100px;" alt="Erons"/><br /><sub><b>Erons</b></sub></a><br /><a href="https://github.com/gr2m/twitter-together/commits?author=Eronmmer" title="Documentation">📖</a></td></tr></table>
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center"><a href="https://jasonet.co"><img src="https://avatars1.githubusercontent.com/u/10660468?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jason Etcovitch</b></sub></a><br /><a href="#design-JasonEtco" title="Design">🎨</a> <a href="https://github.com/twitter-together/action/commits?author=JasonEtco" title="Documentation">📖</a> <a href="https://github.com/twitter-together/action/commits?author=JasonEtco" title="Code">💻</a></td>
+      <td align="center"><a href="http://erons.me"><img src="https://avatars0.githubusercontent.com/u/37238033?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Erons</b></sub></a><br /><a href="https://github.com/twitter-together/action/commits?author=Eronmmer" title="Documentation">📖</a></td>
+      <td align="center"><a href="https://mattcowley.co.uk/"><img src="https://avatars.githubusercontent.com/u/12371363?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Matt Cowley</b></sub></a><br /><a href="https://github.com/twitter-together/action/commits?author=MattIPv4" title="Code">💻</a> <a href="https://github.com/twitter-together/action/commits?author=MattIPv4" title="Documentation">📖</a> <a href="https://github.com/twitter-together/action/commits?author=MattIPv4" title="Tests">⚠️</a> <a href="#ideas-MattIPv4" title="Ideas, Planning, & Feedback">🤔</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
@@ -107,6 +120,8 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 1. `push` event to publish new tweets
 2. `pull_request` event to validate and preview new tweets
 
+_(Tweets can also be invoked locally by calling the script with the `--file` flag, which can be useful for development. E.g. `TWITTER_ACCESS_TOKEN=... node lib/index.js --file tweets/hello-world.tweet`)_
+
 ### The `push` event
 
 When triggered by the `push` event, the script looks for added `*.tweet` files in the `tweets/` folder or subfolders. If there are any, a tweet for each added tweet file is published.
@@ -116,6 +131,97 @@ If there is no `tweets/` subfolder, the script opens a pull request creating the
 ### The `pull_request` event
 
 For the `pull_request` event, the script handles only `opened` and `synchronize` actions. It looks for new `*.tweet` files in the `tweets/` folder or subfolders. If there are any, the length of each tweet is validated. If one is too long, a failed check run with an explanation is created. If all tweets are valid, a check run with a preview of all tweets is created.
+
+### Advanced tweeting
+
+Beyond tweeting out plain-text tweets, twitter-together also supports creating polls, replying to other tweets, retweeting or quote-retweeting other tweets, threading a chain of tweets, and adding images to tweets.
+
+Polls can be included directly in the body of tweet like so:
+
+```tweet
+What is your favorite color?
+
+( ) Red
+( ) Blue
+( ) Green
+```
+
+All other advanced tweeting features are supporting through defining YAML frontmatter in the tweet file.
+Some frontmatter items can be combined together, where Twitter functionality supports it.
+
+A poll can also be defined in frontmatter, rather than in the tweet body, like so:
+
+```tweet
+---
+poll:
+  - Red
+  - Blue
+  - Green
+---
+
+What is your favorite color?
+```
+
+To reply to another tweet, include the `reply` frontmatter item with the tweet link that you wish to reply to:
+
+```tweet
+---
+reply: https://twitter.com/gr2m/status/1409601188362809349
+---
+
+@gr2m I love your work!
+```
+
+If you want to quote-retweet another tweet, include the `retweet` frontmatter item with the tweet link that you wish to quote-retweet.
+If you'd prefer to just retweet without quoting, don't provide a tweet body after the frontmatter.
+
+```tweet
+---
+retweet: https://twitter.com/gr2m/status/1409601188362809349
+---
+
+twitter-together is awesome!
+```
+
+To include media items with your tweet, include the `media` frontmatter item as an array with each item having a `file` property and an optional `alt` property.
+The `file` property should be the name of a file within the `media` directory of your repository (same level as the `tweets` directory).
+
+_(Note: Although alt text can be set in frontmatter, it is not yet actually passed to Twitter due to library limitations)._
+
+```tweet
+---
+media:
+  - file: cat.jpg
+    alt: A cat
+  - file: dog.jpg
+    alt: A dog
+---
+
+Here are some cute animals!
+```
+
+To thread a chain of tweets, use `---` to delimit each tweet in the file. You can optionally set `threadDelimiter` in the frontmatter to change the delimiter for the next tweet in the thread. Each tweet in a thread supports its own frontmatter.
+
+```tweet
+---
+media:
+  - file: cat.jpg
+    alt: A cat
+  - file: dog.jpg
+    alt: A dog
+---
+
+Here are some cute animals!
+
+---
+---
+poll:
+  - Cat
+  - Dog
+---
+
+Which one is cuter?
+```
 
 ## Motivation
 

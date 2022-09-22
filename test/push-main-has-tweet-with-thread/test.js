@@ -1,11 +1,10 @@
 /**
- * This test checks the happy path of a commit to the main branch (master)
+ * This test checks the happy path of a commit to the main branch
  * which includes a new *.tweet file that is making use of the front matter.
  *
  * Only threads and polls are supported as part of .
  */
 
-const assert = require("assert");
 const path = require("path");
 
 const nock = require("nock");
@@ -15,7 +14,7 @@ const tap = require("tap");
 process.env.GITHUB_EVENT_NAME = "push";
 process.env.GITHUB_TOKEN = "secret123";
 process.env.GITHUB_EVENT_PATH = require.resolve("./event.json");
-process.env.GITHUB_REF = "refs/heads/master";
+process.env.GITHUB_REF = "refs/heads/main";
 process.env.GITHUB_WORKSPACE = path.dirname(process.env.GITHUB_EVENT_PATH);
 
 // set other env variables so action-toolkit is happy
@@ -36,7 +35,7 @@ nock("https://api.github.com", {
 })
   // get changed files
   .get(
-    "/repos/gr2m/twitter-together/compare/0000000000000000000000000000000000000001...0000000000000000000000000000000000000002"
+    "/repos/twitter-together/action/compare/0000000000000000000000000000000000000001...0000000000000000000000000000000000000002"
   )
   .reply(200, {
     files: [
@@ -49,7 +48,7 @@ nock("https://api.github.com", {
 
   // post comment
   .post(
-    "/repos/gr2m/twitter-together/commits/0000000000000000000000000000000000000002/comments",
+    "/repos/twitter-together/action/commits/0000000000000000000000000000000000000002/comments",
     (body) => {
       tap.equal(
         body.body,
@@ -59,17 +58,6 @@ nock("https://api.github.com", {
     }
   )
   .reply(201);
-
-// lookup user ID
-nock("https://ads-api.twitter.com")
-  .post("/8/accounts/account123/cards/poll", (body) => {
-    tap.equal(body.name, "tweets/hello-world.tweet");
-    tap.equal(body.duration_in_minutes, "1440"); // two days
-    tap.equal(body.first_choice, "a");
-    tap.equal(body.second_choice, "b");
-    return true;
-  })
-  .reply(201, { data: { card_uri: "card://123" } });
 
 nock("https://api.twitter.com")
   .post("/1.1/statuses/update.json", (body) => {
@@ -84,7 +72,6 @@ nock("https://api.twitter.com")
   })
 
   .post("/1.1/statuses/update.json", (body) => {
-    tap.equal(body.card_uri, "card://123");
     tap.equal(body.status, "Second Tweet!");
     tap.equal(body.in_reply_to_status_id, "0000000000000000001");
     tap.equal(body.auto_populate_reply_metadata, "true");
@@ -98,8 +85,8 @@ nock("https://api.twitter.com")
   });
 
 process.on("exit", (code) => {
-  assert.equal(code, 0);
-  assert.deepEqual(nock.pendingMocks(), []);
+  tap.equal(code, 0);
+  tap.same(nock.pendingMocks(), []);
 });
 
 require("../../lib");

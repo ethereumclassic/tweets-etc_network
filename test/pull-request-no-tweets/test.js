@@ -26,7 +26,7 @@ nock("https://api.github.com", {
   },
 })
   // get changed files
-  .get("/repos/gr2m/twitter-together/pulls/123/files")
+  .get("/repos/twitter-together/action/pulls/123/files")
   .reply(200, [
     {
       status: "updated",
@@ -36,7 +36,7 @@ nock("https://api.github.com", {
 
 process.on("exit", (code) => {
   tap.equal(code, 0);
-  tap.deepEqual(nock.pendingMocks(), []);
+  tap.same(nock.pendingMocks(), []);
 });
 
 require("../../lib");
