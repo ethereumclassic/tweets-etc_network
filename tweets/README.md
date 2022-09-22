@@ -20,7 +20,7 @@ You can also retweet, reply, ~~create polls and upload media~~, with the followi
 
 ```
 ---
-reply: https://twitter.com/eth_classic/status/1565324035424133121
+reply: https://twitter.com/ETC_Network/status/1567773491553882113
 ---
 
 This is a sample reply.
@@ -30,7 +30,7 @@ This is a sample reply.
 
 ```
 ---
-retweet: https://twitter.com/eth_classic/status/1562379187104743424
+retweet: https://twitter.com/ETC_Network/status/1567773491553882113
 ---
 ```
 
@@ -39,7 +39,7 @@ retweet: https://twitter.com/eth_classic/status/1562379187104743424
 
 ```
 ---
-retweet: https://twitter.com/eth_classic/status/1562379187104743424
+retweet: https://twitter.com/ETC_Network/status/1567773491553882113
 ---
 
 This is some text.
