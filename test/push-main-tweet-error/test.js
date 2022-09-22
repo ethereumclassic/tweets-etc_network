@@ -3,7 +3,6 @@
  * which includes a new *.tweet file.
  */
 
-const assert = require("assert");
 const path = require("path");
 
 const nock = require("nock");
@@ -31,7 +30,7 @@ nock("https://api.github.com", {
 })
   // get changed files
   .get(
-    "/repos/gr2m/twitter-together/compare/0000000000000000000000000000000000000001...0000000000000000000000000000000000000002"
+    "/repos/twitter-together/action/compare/0000000000000000000000000000000000000001...0000000000000000000000000000000000000002"
   )
   .reply(200, {
     files: [
@@ -44,7 +43,7 @@ nock("https://api.github.com", {
 
   // post comment
   .post(
-    "/repos/gr2m/twitter-together/commits/0000000000000000000000000000000000000002/comments",
+    "/repos/twitter-together/action/commits/0000000000000000000000000000000000000002/comments",
     (body) => {
       console.log(body.body);
       tap.equal(
@@ -57,8 +56,8 @@ nock("https://api.github.com", {
   .reply(201);
 
 process.on("exit", (code) => {
-  assert.strictEqual(code, 1);
-  assert.deepStrictEqual(nock.pendingMocks(), []);
+  tap.equal(code, 1);
+  tap.same(nock.pendingMocks(), []);
 
   // above code exits with 1 (error), but tap expects 0.
   // Tap adds the "process.exitCode" property for that purpose.

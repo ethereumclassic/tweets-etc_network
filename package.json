@@ -1,6 +1,6 @@
 {
   "name": "twitter-together",
-  "version": "1.9.1",
+  "version": "2.1.1",
   "description": "A GitHub action to tweet together using pull requests",
   "main": "lib/index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "coverage": "nyc report --reporter=html && open coverage/index.html",
     "lint": "prettier --check '{lib,test}/**/*.js' 'docs/*.md' 'tweets/README.md' README.md package.json",
     "lint:fix": "prettier --write '{lib,test}/**/*.js' 'docs/*.md' 'tweets/README.md' README.md package.json",
-    "test": "tap --100 test/*/test.js",
+    "test": "tap --branches=70 --functions=100 --lines=80 --statements=80 test/*/test.js",
     "posttest": "npm run -s lint"
   },
   "keywords": [],
@@ -16,22 +16,22 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "1.9.1",
-    "@octokit/action": "^2.0.0",
+    "@octokit/action": "^4.0.8",
     "js-yaml": "^4.1.0",
     "mime-types": "^2.1.35",
-    "parse-diff": "^0.7.0",
+    "parse-diff": "^0.9.0",
     "twitter": "^1.7.1",
-    "twitter-text": "^3.0.0"
+    "twitter-text": "^3.1.0"
   },
   "devDependencies": {
-    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/git": "^10.0.1",
     "@zeit/ncc": "^0.22.0",
-    "nock": "^12.0.0",
-    "prettier": "^2.0.1",
-    "semantic-release": "^19.0.3",
-    "tap": "^14.10.7"
+    "nock": "^13.2.9",
+    "prettier": "^2.7.1",
+    "semantic-release": "^19.0.5",
+    "tap": "^16.3.0"
   },
-  "repository": "github:gr2m/twitter-together",
+  "repository": "github:twitter-together/action",
   "release": {
     "branches": [
       "+([0-9]).x",
@@ -49,12 +49,7 @@
     "plugins": [
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
-      [
-        "@semantic-release/github",
-        {
-          "successComment": false
-        }
-      ],
+      "@semantic-release/github",
       [
         "@semantic-release/npm",
         {

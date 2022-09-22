@@ -62,4 +62,4 @@ TODO
 
 ## Questions?
 
-If you have any further questions or suggestions, please create an issue at https://github.com/gr2m/twitter-together/issues/new
+If you have any further questions or suggestions, please create an issue at https://github.com/twitter-together/action/issues/new

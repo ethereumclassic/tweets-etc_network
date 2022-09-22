@@ -26,7 +26,7 @@ process.env.GITHUB_SHA = "";
 nock("https://api.github.com")
   // get changed files
   .get(
-    "/repos/gr2m/twitter-together/compare/0000000000000000000000000000000000000001...0000000000000000000000000000000000000002"
+    "/repos/twitter-together/action/compare/0000000000000000000000000000000000000001...0000000000000000000000000000000000000002"
   )
   .reply(200, {
     files: [
@@ -39,7 +39,7 @@ nock("https://api.github.com")
 
 process.on("exit", (code) => {
   tap.equal(code, 0);
-  tap.deepEqual(nock.pendingMocks(), []);
+  tap.same(nock.pendingMocks(), []);
 
   // for some reason, tap fails with "Suites:   1 failed" if we don't exit explicitly
   process.exit(0);

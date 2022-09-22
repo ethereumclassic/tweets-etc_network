@@ -1,9 +1,8 @@
 /**
- * This test checks the happy path of a commit to the main branch (master)
- * which includes a new *.tweet file that is making use of the front matter to retweet.
+ * This test checks the happy path of a commit to the main branch
+ * which includes a new *.tweet file that is making use of the front matter to reply.
  */
 
-const assert = require("assert");
 const path = require("path");
 
 const nock = require("nock");
@@ -13,7 +12,7 @@ const tap = require("tap");
 process.env.GITHUB_EVENT_NAME = "push";
 process.env.GITHUB_TOKEN = "secret123";
 process.env.GITHUB_EVENT_PATH = require.resolve("./event.json");
-process.env.GITHUB_REF = "refs/heads/master";
+process.env.GITHUB_REF = "refs/heads/main";
 process.env.GITHUB_WORKSPACE = path.dirname(process.env.GITHUB_EVENT_PATH);
 
 // set other env variables so action-toolkit is happy
@@ -31,7 +30,7 @@ nock("https://api.github.com", {
 })
   // get changed files
   .get(
-    "/repos/gr2m/twitter-together/compare/0000000000000000000000000000000000000001...0000000000000000000000000000000000000002"
+    "/repos/twitter-together/action/compare/0000000000000000000000000000000000000001...0000000000000000000000000000000000000002"
   )
   .reply(200, {
     files: [
@@ -44,7 +43,7 @@ nock("https://api.github.com", {
 
   // post comment
   .post(
-    "/repos/gr2m/twitter-together/commits/0000000000000000000000000000000000000002/comments",
+    "/repos/twitter-together/action/commits/0000000000000000000000000000000000000002/comments",
     (body) => {
       tap.equal(
         body.body,
@@ -56,23 +55,22 @@ nock("https://api.github.com", {
   .reply(201);
 
 nock("https://api.twitter.com")
-  .post("/1.1/statuses/retweet/0000000000000000001.json")
+  .post("/1.1/statuses/update.json", (body) => {
+    tap.equal(body.status, "Good idea :)");
+    tap.equal(body.in_reply_to_status_id, "0000000000000000001");
+    tap.equal(body.auto_populate_reply_metadata, "true");
+    return true;
+  })
   .reply(201, {
     id_str: "0000000000000000002",
     user: {
       screen_name: "gr2m",
     },
-    retweeted_status: {
-      id_str: "0000000000000000001",
-      user: {
-        screen_name: "m2rg",
-      },
-    },
   });
 
 process.on("exit", (code) => {
-  assert.equal(code, 0);
-  assert.deepEqual(nock.pendingMocks(), []);
+  tap.equal(code, 0);
+  tap.same(nock.pendingMocks(), []);
 });
 
 require("../../lib");

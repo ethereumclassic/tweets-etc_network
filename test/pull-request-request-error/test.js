@@ -26,12 +26,12 @@ nock("https://api.github.com", {
   },
 })
   // get changed files
-  .get("/repos/gr2m/twitter-together/pulls/123/files")
+  .get("/repos/twitter-together/action/pulls/123/files")
   .reply(500);
 
 process.on("exit", (code) => {
   tap.equal(code, 1);
-  tap.deepEqual(nock.pendingMocks(), []);
+  tap.same(nock.pendingMocks(), []);
 
   // above code exits with 1 (error), but tap expects 0.
   // Tap adds the "process.exitCode" property for that purpose.
