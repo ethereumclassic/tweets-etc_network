@@ -1,8 +1,0 @@
-name: Twitter, together!
-description: "Collaborate on tweets just like you collaborate on code, using pull requests"
-branding:
-  icon: cast
-  color: blue
-runs:
-  using: "node16"
-  main: "dist/index.js"
