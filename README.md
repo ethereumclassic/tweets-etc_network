@@ -11,7 +11,7 @@ This repo uses the [Twitter-Together](https://github.com/twitter-together/action
     - Ensure the formatting matches one of the [tweet types](#Tweet-Types).
 1. Make sure the filename is correct ("Name your file...").
     - It must end in `.tweet` and be inside the `tweets` folder. 
-    - It must follow the format `YYYY_MM_DD-Your-Description.tweet`
+    - It must follow the format `YYMMDD-Your-Description.tweet`
 1. Click "Propose new file", ensuring you are creating a new branch.
 1. Click "Create pull request"
 1. Your tweet will be reviewed for approval
