@@ -1,4 +1,4 @@
-# ETC Twitter Together
+# [@ETC_Network](https://twitter.com/ETC_Network) Twitter Together
 
 This repo uses the [Twitter-Together](https://github.com/twitter-together/action/) GitHub Action to allow anyone to make a pull request in order to submit tweets to the [@ETC_Network](https://twitter.com/ETC_Network) Twitter Account.
 
