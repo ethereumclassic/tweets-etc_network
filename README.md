@@ -9,6 +9,8 @@ This repo uses the [Twitter-Together](https://github.com/twitter-together/action
 1. Enter the contents of the tweet you want to submit. 
     - Make sure the content follows the [rules](#Rules).
     - Ensure the formatting matches one of the [tweet types](#Tweet-Types).
+    - Line breaks are included, so ensure you only write on a new line number if you want a new line.
+    - If you are `retweet` or `reply` you must follow exactly same URL format.
 1. Make sure the filename is correct ("Name your file...").
     - It must end in `.tweet` and be inside the `tweets` folder. 
     - It must follow the format `YYMMDD-Your-Description.tweet`
