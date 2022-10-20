@@ -1,5 +1,6 @@
 ---
-  - media: eth-etc.jpeg
+media:
+  - file: eth-etc.jpeg
     alt: Build Unstoppable Applications
 --- 
 
