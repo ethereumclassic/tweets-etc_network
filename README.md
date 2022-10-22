@@ -22,6 +22,17 @@ This repo uses the [Twitter-Together](https://github.com/twitter-together/action
 
 - [TBD](https://github.com/ethereumclassic/twitter-together/issues/15)
 
+
+### Third Party Projects
+
+- Must be relevant to ETC.
+- Can be retweets, but must contain disclaimers (e.g. do your own research).
+- **Large** projects from **established** teams that are well known to the crypto-Twitter community and have been operating for at least 2 years are allowed. E.g.
+  - Binance listing USDT Tether tokens on the ETC blockchain
+  - Chainlink deploys to ETC
+  - Grayscale lists ETC ETF
+
+
 ## Tweet Types
 
 ### [Simple Tweet](https://twitter.com/testing_tt_/status/1575821590381690881)
