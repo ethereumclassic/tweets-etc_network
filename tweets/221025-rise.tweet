@@ -1,6 +1,6 @@
 ---
 media:
-  - file rise.jpg
+  - file: rise.jpg
     alt: You have to survive to succeed
 ---
 
