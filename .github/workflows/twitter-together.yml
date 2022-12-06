@@ -18,34 +18,34 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   setup:
     name: Setup parameters for Tweet
-      runs on: ubuntu-latest
-      steps:
-        - name: Download lasttweettimestamp
-          uses: actions/download-artifact@v1
-            with:
-            name: lasttweettimestamp
-        - name: Read lasttweettimestamp
-          run: 
-               # Read the lasttweettimestamp file and store it in a variable
-               export LAST_TWEET_TIMESTAMP=$(cat lasttweettimestamp.txt)
-        - name: set CURRENT_TIME variable
-          uses: TheCrowbill/twitter-together@etc-dev
-          run: 
-                # Get the current date and time
-                CURRENT_TIME=$(date)
-        - name: Compare CURRENT_TIME and LAST_TWEET_TIMESTAMP
-          run: 
-                # Calculate the difference between CURRENT_TIME and LAST_TWEET_TIMESTAMP in minutes
-                DIFFERENCE=$(($(date -d "$CURRENT_TIME" +%s) - $(date -d "$LAST_TWEET_TIMESTAMP" +%s)) / 60)
-                if [ $DIFFERENCE -lt 180 ]; then
-                  echo "Waiting for time between tweets to exceed 180 minutes..."
-                  # Sleep for 60 seconds
-                  sleep 60
-                  # Recheck the difference
-                  DIFFERENCE=$(($(date -d "$CURRENT_TIME" +%s) - $(date -d "$LAST_TWEET_TIMESTAMP" +%s)) / 60)
-                fi
-                # Continue execution when the difference is greater than 180 minutes
-                echo "Tweeting"
+    runs on: ubuntu-latest
+    steps:
+      - name: Download lasttweettimestamp
+        uses: actions/download-artifact@v1
+          with:
+          name: lasttweettimestamp
+      - name: Read lasttweettimestamp
+        run: 
+            # Read the lasttweettimestamp file and store it in a variable
+            export LAST_TWEET_TIMESTAMP=$(cat lasttweettimestamp.txt)
+      - name: set CURRENT_TIME variable
+        uses: TheCrowbill/twitter-together@etc-dev
+        run: 
+            # Get the current date and time
+            CURRENT_TIME=$(date)
+      - name: Compare CURRENT_TIME and LAST_TWEET_TIMESTAMP
+        run: 
+            # Calculate the difference between CURRENT_TIME and LAST_TWEET_TIMESTAMP in minutes
+            DIFFERENCE=$(($(date -d "$CURRENT_TIME" +%s) - $(date -d "$LAST_TWEET_TIMESTAMP" +%s)) / 60)
+            if [ $DIFFERENCE -lt 180 ]; then
+              echo "Waiting for time between tweets to exceed 180 minutes..."
+              # Sleep for 60 seconds
+              sleep 60
+              # Recheck the difference
+              DIFFERENCE=$(($(date -d "$CURRENT_TIME" +%s) - $(date -d "$LAST_TWEET_TIMESTAMP" +%s)) / 60)
+            fi
+            # Continue execution when the difference is greater than 180 minutes
+            echo "Tweeting"
   tweet:
     name: Tweet
     runs-on: ubuntu-latest
@@ -61,13 +61,14 @@ jobs:
           TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
           TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
           TWITTER_API_SECRET_KEY: ${{ secrets.TWITTER_API_SECRET_KEY }}
+  timestamp: 
     name: Store-timestamp
     runs-on: ubuntu-latest
     steps:
       - name: Create timestamp file
-        run: echo $(date +%s) > lasttweettimestamp.txt
+      run: echo $(date +%s) > lasttweettimestamp.txt
       - name: Upload timestamp
-        uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v1
          with:
           name: lasttweettimestamp
           path: lasttweettimestamp.txt
