@@ -69,7 +69,5 @@ jobs:
       - name: Upload timestamp
         uses: actions/upload-artifact@v1
          with:
-          name: timestamp
+          name: lasttweettimestamp
           path: lasttweettimestamp.txt
-
-    
