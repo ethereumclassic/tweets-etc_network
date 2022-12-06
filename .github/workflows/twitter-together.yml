@@ -21,8 +21,9 @@ jobs:
     runs on: ubuntu-latest
     steps:
       - name: Download lasttweettimestamp
+          # Retrieve last Tweet's timestamp artifact
         uses: actions/download-artifact@v1
-          with:
+        with:
           name: lasttweettimestamp
       - name: Read lasttweettimestamp
         run: 
@@ -66,8 +67,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Create timestamp file
+      # Create file containing new Tweet's timetamnp after successful Tweet
       run: echo $(date +%s) > lasttweettimestamp.txt
       - name: Upload timestamp
+      # Store new timestamp as artifact
       uses: actions/upload-artifact@v1
          with:
           name: lasttweettimestamp
