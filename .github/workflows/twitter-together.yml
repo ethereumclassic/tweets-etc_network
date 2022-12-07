@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: Download lasttweettimestamp
           # Retrieve last Tweet's timestamp artifact
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v3
         with:
           name: lasttweettimestamp
       - name: Read lasttweettimestamp
