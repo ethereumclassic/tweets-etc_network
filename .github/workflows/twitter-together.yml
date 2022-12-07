@@ -36,7 +36,7 @@ jobs:
         run: CURRENT_TIME=$(date -u +%s)
       - name: Compare CURRENT_TIME and LAST_TWEET_TIMESTAMP
         uses: ajilraju/actions-date@v0.1
-        witb:
+        with:
           args: date -u +%s
         run: # Calculate the difference between CURRENT_TIME and LAST_TWEET_TIMESTAMP in minutes
             DIFFERENCE=$(($(date -d "$CURRENT_TIME" +%s) - $(date -d "$LAST_TWEET_TIMESTAMP" +%s)) / 60)
