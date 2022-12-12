@@ -19,6 +19,7 @@ jobs:
   setup:
     name: Setup parameters for Tweet
     runs on: ubuntu-latest
+    if: github.event_name != 'pull_request_target'
     steps:
       - name: Download lasttweettimestamp
           # Retrieve last Tweet's timestamp artifact
@@ -41,7 +42,7 @@ jobs:
         run: # Calculate the difference between CURRENT_TIME and LAST_TWEET_TIMESTAMP in minutes
             DIFFERENCE=$(($(date -d "$CURRENT_TIME" +%s) - $(date -d "$LAST_TWEET_TIMESTAMP" +%s)) / 60)
             if [ $DIFFERENCE -lt 180 ]; then
-              echo "Waiting for time between tweets to exceed 180 minutes..."
+              echo "Waiting for time between tweets to exceed 180 minutes... Currently" $DIFFERENCE "minutes have elapsed."
               # Sleep for 60 seconds
               sleep 60
               # Reset CuRRENT_TIME variable
@@ -76,7 +77,7 @@ jobs:
       uses: ajilraju/actions-date@v0.1
         with:
           args: date -u +%s
-      # Create file containing new Tweet's timetamnp after successful Tweet
+      # Create file containing new Tweet's timestamp after successful Tweet
       run: echo $(date -d "$CURRENT_TIME" +%s) > lasttweettimestamp.txt
       - name: Upload timestamp
       # Store new timestamp as artifact
