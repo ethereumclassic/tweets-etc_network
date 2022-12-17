@@ -16,9 +16,38 @@ jobs:
         uses: IstoraMandiri/twitter-together@etc-dev
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  setup:
+    name: Setup parameters for Tweet
+    runs on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - name: Cooldown timer
+      # Create CURRENT_TIME variable and assign value
+      uses: ajilraju/actions-date@v0.1
+      with:
+        args: date -u +%s
+        run: export CURRENT_TIME=$(date -u +%s)
+      # Read the lasttweettimestamp.txt file and store value in LAST_TWEET_TIMESTAMP variable
+        run: export LAST_TWEET_TIMESTAMP=$(cat lasttweettimestamp.txt)
+      # Calculate DIFFERENCE variable in minutes
+        run: export DIFFERENCE=$(($(date -d "$CURRENT_TIME" +%s) - $(date -d "$LAST_TWEET_TIMESTAMP" +%s)) / 60)
+      # Wait until 180 minutes have elapsed since last Tweet
+        run: while [ $DIFFERENCE -lt 180 ]; do
+             echo "Waiting for time between tweets to exceed 180 minutes... Currently" $DIFFERENCE "minutes have elapsed."
+          # Sleep for 60 seconds
+             sleep 60
+          # Reset CuRRENT_TIME variable
+             export CURRENT_TIME=$(date -u +%s)
+          # Recheck the difference
+             export DIFFERENCE=$(($(date -d "$CURRENT_TIME" +%s) - $(date -d "$LAST_TWEET_TIMESTAMP" +%s)) / 60)
+      - name: Complete setup
+      # Create new lasttweettimestamp file and proceed to Tweet
+        run: echo $CURRENT_TIME > lasttweettimestamp.txt
+             echo "Tweeting with timestamp " $(date -u -d "$CURRENT_TIME")"."
   tweet:
     name: Tweet
     runs-on: ubuntu-latest
+    requires: setup
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - name: checkout main
