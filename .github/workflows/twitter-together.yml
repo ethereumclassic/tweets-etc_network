@@ -21,6 +21,12 @@ jobs:
     runs on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
+      - name: Activate files
+      # Load archive of timestamp files
+        uses: actions/download-artifact@v2
+        with:
+          name: timestamp
+          path: lasttweettimestamp.txt
       - name: Cooldown timer
       # Create CURRENT_TIME variable and assign value
       uses: ajilraju/actions-date@v0.1
@@ -29,10 +35,13 @@ jobs:
         run: export CURRENT_TIME=$(date -u +%s)
       # Read the lasttweettimestamp.txt file and store value in LAST_TWEET_TIMESTAMP variable
         run: export LAST_TWEET_TIMESTAMP=$(cat lasttweettimestamp.txt)
+      # Rename lasttweettimestamp.txt to lasttweettimestamp.txt.old
+        run: mv lasttweettimestamp.txt lasttweettimestamp.txt.old
       # Calculate DIFFERENCE variable in minutes
         run: export DIFFERENCE=$(($(date -d "$CURRENT_TIME" +%s) - $(date -d "$LAST_TWEET_TIMESTAMP" +%s)) / 60)
       # Wait until 180 minutes have elapsed since last Tweet
-        run: while [ $DIFFERENCE -lt 180 ]; do
+        run: |
+             while [ $DIFFERENCE -lt 180 ]; do
              echo "Waiting for time between tweets to exceed 180 minutes... Currently" $DIFFERENCE "minutes have elapsed."
           # Sleep for 60 seconds
              sleep 60
@@ -41,9 +50,16 @@ jobs:
           # Recheck the difference
              export DIFFERENCE=$(($(date -d "$CURRENT_TIME" +%s) - $(date -d "$LAST_TWEET_TIMESTAMP" +%s)) / 60)
       - name: Complete setup
-      # Create new lasttweettimestamp file and proceed to Tweet
+      # Create new timestamp file
         run: echo $CURRENT_TIME > lasttweettimestamp.txt
-             echo "Tweeting with timestamp " $(date -u -d "$CURRENT_TIME")"."
+      # Upload new timestamp file
+        uses: actions/upload-artifact@v2
+        with:
+          name: timestamp
+          path: lasttweettimestamp.txt
+      - name: Report success
+      # Print to console tweeting success messaging
+        run: echo "Tweeting with timestamp " $(date -u -d "$CURRENT_TIME")"."
   tweet:
     name: Tweet
     runs-on: ubuntu-latest
