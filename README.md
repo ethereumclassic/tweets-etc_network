@@ -4,6 +4,12 @@ This repo uses the [Twitter-Together](https://github.com/twitter-together/action
 
 ## How to Tweet
 
+### Graphical UI
+
+You can now submit tweets via https://etc.contributions.app/
+
+### Manually via Github
+
 1. Open the [tweets](./tweets/) folder.
 1. Click "Add file" -> "Create new file".
 1. Enter the contents of the tweet you want to submit. 
