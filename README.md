@@ -20,7 +20,9 @@ This repo uses the [Twitter-Together](https://github.com/twitter-together/action
 
 ## Rules
 
-- [TBD](https://github.com/ethereumclassic/twitter-together/issues/15)
+The rules for appropriate tweets on this account are to be determiend and will evolve over time as needed.
+
+For now, please review the more stringent and established [rules on the main account](https://github.com/ethereumclassic/tweets-eth_classic#rules), and assume more leniency with regards to seriousness and promotion of other projects. Try to keep submissions reasonable and relevant, and in line with previous tweets, to increase the chance of your tweet being accepted.
 
 ## Tweet Types
 
