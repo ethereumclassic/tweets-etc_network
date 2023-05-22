@@ -4,6 +4,12 @@ This repo uses the [Twitter-Together](https://github.com/twitter-together/action
 
 ## How to Tweet
 
+### Graphical UI
+
+You can now submit tweets via https://etc.contributions.app/
+
+### Manually via Github
+
 1. Open the [tweets](./tweets/) folder.
 1. Click "Add file" -> "Create new file".
 1. Enter the contents of the tweet you want to submit. 
@@ -20,7 +26,9 @@ This repo uses the [Twitter-Together](https://github.com/twitter-together/action
 
 ## Rules
 
-- [TBD](https://github.com/ethereumclassic/twitter-together/issues/15)
+The rules for appropriate tweets on this account are to be determiend and will evolve over time as needed.
+
+For now, please review the more stringent and established [rules on the main account](https://github.com/ethereumclassic/tweets-eth_classic#rules), and assume more leniency with regards to seriousness and promotion of other projects. Try to keep submissions reasonable and relevant, and in line with previous tweets, to increase the chance of your tweet being accepted.
 
 ## Tweet Types
 
